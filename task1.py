@@ -1,24 +1,19 @@
-string = input()
+def closedBrackets(s):
+    stack = []
+    pairs = {')': '(', '}': '{', ']': '['}
+    
+    for char in s:
+        if char in pairs.values():
+            stack.append(char)
+        else:
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+    
+    return len(stack) == 0
 
-sym_dict = {
-    "{": 0,
-    "(": 0,
-    "[": 0,
-}
-
-for sym in string:
-    match sym:
-        case "{":
-            sym_dict["{"] += 1
-        case "}":
-            sym_dict["{"] -= 1
-        case "(":
-            sym_dict["("] += 1
-        case ")":
-            sym_dict["("] -= 1
-        case "[":
-            sym_dict["["] += 1
-        case "]":
-            sym_dict["["] -= 1
-
-print(not any(sym_dict.values()))
+print(closedBrackets("()"))        # True
+print(closedBrackets("()[]{}"))    # True
+print(closedBrackets("(]"))        # False
+print(closedBrackets("([])"))      # True
+print(closedBrackets("([)]"))      # False
